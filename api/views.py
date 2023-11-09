@@ -98,8 +98,23 @@ class CustomerDetailsView(View):
         return JsonResponse({'message': 'customer updated.'}, status=203)
 
     def delete(self, request: HttpRequest, pk: int) -> JsonResponse:
-        # TODO: delte customer
-        pass
+        """delte customer
+
+        Args:
+            request (HttpRequest): _description_
+            pk (int): _description_
+
+        Returns:
+            JsonResponse: _description_
+        """        
+        try:
+            customer = Customer.objects.get(id=pk)
+        except (ObjectDoesNotExist, Customer.DoesNotExist):
+            return JsonResponse({'error': 'customer does not exist.'}, status=404)
+
+        customer.delete()
+
+        return JsonResponse({'message': 'customer deleted.'}, status=204)
 
 
 class ContactView(View):
