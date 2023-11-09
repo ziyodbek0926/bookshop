@@ -72,8 +72,30 @@ class CustomerDetailsView(View):
         return JsonResponse(result)
 
     def put(self, request: HttpRequest, pk: int) -> JsonResponse:
-        # TODO: udpate customer
-        pass
+        """udpate customer
+
+        Args:
+            request (HttpRequest): _description_
+            pk (int): _description_
+
+        Returns:
+            JsonResponse: _description_
+        """        
+        try:
+            customer = Customer.objects.get(id=pk)
+        except (ObjectDoesNotExist, Customer.DoesNotExist):
+            return JsonResponse({'error': 'customer does not exist.'}, status=404)
+
+        data = json.loads(request.body.decode())
+
+        customer.first_name = data.get('first_name', customer.first_name)
+        customer.last_name = data.get('last_name', customer.last_name)
+        customer.username = data.get('username', customer.username)
+        customer.password = data.get('password', customer.password)
+
+        customer.save()
+
+        return JsonResponse({'message': 'customer updated.'}, status=203)
 
     def delete(self, request: HttpRequest, pk: int) -> JsonResponse:
         # TODO: delte customer
