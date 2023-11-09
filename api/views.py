@@ -119,12 +119,45 @@ class CustomerDetailsView(View):
 
 class ContactView(View):
     def get(self, request: HttpRequest, pk: int) -> JsonResponse:
-        # TODO: get contact
-        pass
+        try:
+            customer = Customer.objects.get(id=pk)
+        except (ObjectDoesNotExist, Customer.DoesNotExist):
+            return JsonResponse({'error': 'customer does not exist.'}, status=404)
+        
+        try:
+            contact = Contact.objects.get(customer=customer)
+        except (ObjectDoesNotExist, Contact.DoesNotExist):
+            return JsonResponse({'error': 'contact does not exist.'}, status=404)
+
+        result = model_to_dict(contact)
+
+        return JsonResponse(result)
 
     def post(self, request: HttpRequest, pk: int) -> JsonResponse:
-        # TODO: create contact
-        pass
+        """create contact
+
+        Args:
+            request (HttpRequest): _description_
+            pk (int): _description_
+
+        Returns:
+            JsonResponse: _description_
+        """ 
+        try:
+            customer = Customer.objects.get(id=pk)
+        except (ObjectDoesNotExist, Customer.DoesNotExist):
+            return JsonResponse({'error': 'customer does not exist.'}, status=404)
+
+        data = json.loads(request.body.decode())   
+
+        Contact.objects.create(
+            customer=customer,
+            email=data['email'],
+            address=data['address'],
+            phone=data['phone'],
+        )
+
+        return JsonResponse({'message': 'object created.'}, status=201) 
 
     def put(self, request: HttpRequest, pk: int) -> JsonResponse:
         # TODO: udpate contact
