@@ -3,6 +3,7 @@ from django.http import HttpRequest, JsonResponse
 from .models import Customer, Contact
 from django.forms import model_to_dict
 import json
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class CustomersView(View):
@@ -50,10 +51,25 @@ class CustomersView(View):
         else:
             return JsonResponse({'error': 'invalid data.'}, status=404)
 
+
 class CustomerDetailsView(View):
     def get(self, request: HttpRequest, pk: int) -> JsonResponse:
-        # TODO: get customer
-        pass
+        """get customer
+
+        Args:
+            request (HttpRequest): _description_
+            pk (int): _description_
+
+        Returns:
+            JsonResponse: _description_
+        """
+        try:
+            customer = Customer.objects.get(id=pk)
+        except (ObjectDoesNotExist, Customer.DoesNotExist):
+            return JsonResponse({'error': 'customer does not exist.'}, status=404)
+        
+        result = model_to_dict(customer, fields=['id', 'first_name', 'last_name', 'username'])
+        return JsonResponse(result)
 
     def put(self, request: HttpRequest, pk: int) -> JsonResponse:
         # TODO: udpate customer
