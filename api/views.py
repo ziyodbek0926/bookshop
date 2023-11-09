@@ -4,6 +4,7 @@ from .models import Contact, Customer
 from django.forms import model_to_dict
 from django.core.exceptions import ObjectDoesNotExist
 import json
+from django.shortcuts import get_object_or_404
 
 
 class CustomerView(View):
@@ -51,10 +52,7 @@ class CustomerDetailsView(View):
 
 class ContactView(View):
     def get(self, reqeust: HttpRequest, pk: int) -> JsonResponse:
-        try:
-            customer = Customer.objects.get(id=pk)
-        except ObjectDoesNotExist:
-            return JsonResponse({'error': 'customer does not exist.'})
+        customer = get_object_or_404(Customer, pk=pk)
 
         try:
             contact = Contact.objects.get(customer=customer)
