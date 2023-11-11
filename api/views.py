@@ -80,7 +80,7 @@ class CustomerDetailsView(View):
 
         Returns:
             JsonResponse: _description_
-        """        
+        """
         try:
             customer = Customer.objects.get(id=pk)
         except (ObjectDoesNotExist, Customer.DoesNotExist):

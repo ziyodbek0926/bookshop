@@ -16,3 +16,45 @@ contact table
 2. delete customer's contact - `api/v1/customers/{id}/contact/`
 3. update customer's contact - `api/v1/customers/{id}/contact/`
 4. get customer's contact - `api/v1/customers/{id}/contact/`
+
+## Database schema
+
+customer
+
+- id
+- first_name
+- last_name
+- username
+- password
+
+contact
+
+- id
+- customer_id
+- email
+- address
+- phone
+
+publisher
+
+- id
+- name
+- description
+
+language
+
+- id
+- lang
+
+book
+
+- id
+- title
+- description
+- price
+- quantity
+- isbn
+- languege FK
+- pages
+- publisher FK
+- published_date 
