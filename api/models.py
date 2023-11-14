@@ -16,6 +16,26 @@ class Customer(models.Model):
         return self.full_name
 
 
+class Author(models.Model):
+    first_name = models.CharField(max_length=64)
+    last_name = models.CharField(max_length=64)
+    bio = models.TextField(blank=True, null=True)
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
+    def __str__(self):
+        return self.full_name
+
+
+class Genre(models.Model):
+    name = models.CharField(max_length=128, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Contact(models.Model):
     customer = models.OneToOneField(Customer, on_delete=models.CASCADE)
     email = models.EmailField()
@@ -51,6 +71,8 @@ class Book(models.Model):
     pages = models.IntegerField(validators=[MinValueValidator(limit_value=0)])
     publisher = models.ForeignKey(Publisher, on_delete=models.DO_NOTHING)
     pubished_date = models.DateField()
+    authors = models.ManyToManyField(Author)
+    genres = models.ManyToManyField(Genre)
 
     def __str__(self):
         return self.title

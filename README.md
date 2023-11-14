@@ -72,6 +72,18 @@ language
 - id
 - lang
 
+author
+
+- id
+- first_name
+- last_name
+- bio
+
+genre
+
+- id 
+- name
+
 book
 
 - id
@@ -84,3 +96,5 @@ book
 - pages
 - publisher FK
 - published_date 
+- authors
+- genres
