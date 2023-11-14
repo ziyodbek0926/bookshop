@@ -2,6 +2,8 @@
 
 ## API docs
 
+### Endpoints
+
 cutomer table
 
 1. create customer - `api/v1/customers/`
@@ -16,6 +18,30 @@ contact table
 2. delete customer's contact - `api/v1/customers/{id}/contact/`
 3. update customer's contact - `api/v1/customers/{id}/contact/`
 4. get customer's contact - `api/v1/customers/{id}/contact/`
+
+publisher table
+
+1. create publisher - `api/v1/publishers/`
+2. delete publisher by pk - `api/v1/publishers/{id}/`
+3. update publisher by pk - `api/v1/publishers/{id}/`
+4. get publisher by pk - `api/v1/publishers/{id}/`
+5. get publishes - `api/v1/publishers/`
+
+language table
+
+1. create language - `api/v1/languages/`
+2. delete language by pk - `api/v1/languages/{id}/`
+3. update language by pk - `api/v1/languages/{id}/`
+4. get language by pk - `api/v1/languages/{id}/`
+5. get languages - `api/v1/languages/`
+
+book table
+
+1. create book - `api/v1/books/`
+2. delete book by pk - `api/v1/books/{id}/`
+3. update book by pk - `api/v1/books/{id}/`
+4. get book by pk - `api/v1/books/{id}/`
+5. get books - `api/v1/books/`
 
 ## Database schema
 
